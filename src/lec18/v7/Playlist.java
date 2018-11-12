@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Playlist extends java.util.Observable {
+
+public class Playlist {
 
 	private List<Song> songs;
+	private List<PlaylistObserver> observers;
 	
 	public Playlist() {
 		songs = new ArrayList<Song>();
+		observers = new ArrayList<PlaylistObserver>();
 	}
 	
 	public int getSize() {
@@ -22,13 +25,11 @@ public class Playlist extends java.util.Observable {
 
 	public void addSong(Song s) {
 		songs.add(s);
-		setChanged();
 		notifyObservers();
 	}
 	
 	public void removeSong(Song s) {
 		songs.remove(s);
-		setChanged();
 		notifyObservers();
 	}
 
@@ -38,7 +39,6 @@ public class Playlist extends java.util.Observable {
 
 	public void shuffle() {
 		Collections.shuffle(songs);
-		setChanged();
 		notifyObservers();
 	}
 	
@@ -49,7 +49,17 @@ public class Playlist extends java.util.Observable {
 		Song temp = songs.get(start);
 		songs.set(start, songs.get(end));
 		songs.set(end, temp);
-		setChanged();
 		notifyObservers();
+	}
+
+	
+	public void addObserver(PlaylistObserver o) {
+		observers.add(o);
+	}
+	
+	private void notifyObservers() {
+		for (PlaylistObserver o : observers) {
+			o.playlistChanged(this);
+		}
 	}
 }

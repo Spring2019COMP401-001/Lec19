@@ -8,7 +8,7 @@ import java.util.Observer;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class PlaylistView extends JPanel implements Observer {
+public class PlaylistView extends JPanel implements PlaylistObserver {
 
 	private Playlist plist;
 	private JPanel list_panel;
@@ -32,7 +32,7 @@ public class PlaylistView extends JPanel implements Observer {
 	}
 
 	@Override
-	public void update(Observable arg0, Object arg1) {
+	public void playlistChanged(Playlist changed_playlist) {
 		list_panel.removeAll();
 		for (Song s : plist.getSongs()) {
 			JLabel song_label = new JLabel(s.toString());

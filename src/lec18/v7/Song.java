@@ -25,16 +25,7 @@ public class Song {
 	}
 	
 	public String toString() {
-		String rating_string = "";
-		
-		for (int i=0; i<5; i++) {
-			if (rating > i) {
-				rating_string += "\u2605";
-			} else {
-				rating_string += "\u2606";
-			}
-		}
-		return title + " by " + artist + " (" + rating_string + ")";
+		return title + " by " + artist + " (" + rating + " stars)";
 	}
 }
 
